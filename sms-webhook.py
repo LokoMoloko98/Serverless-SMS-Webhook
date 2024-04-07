@@ -1,8 +1,11 @@
 import requests
 import json
+import os
 
 def lambda_handler(event, context):
-
+    api_key = os.environ.get('CLICKATELL_API_KEY')
+    whatsapp_cell_to = os.environ.get('CELL_NUMBER_TO_WHATSAPP')
+    sms_cell_to = os.environ.get('CELL_NUMBER_TO_SMS')
     #request_data = json.loads(event['body'])
 
     # Define the URL for the API call
@@ -12,7 +15,7 @@ def lambda_handler(event, context):
     headers = {
         "Content-Type": "application/json",
         "Accept": "application/json",
-        "Authorization": "<Clickatell API key>"
+        "Authorization": api_key
     }
 
     # Define the JSON payload for the request
@@ -20,12 +23,12 @@ def lambda_handler(event, context):
         "messages": [
             {
                 "channel": "whatsapp",
-                "to": "<Clickatell registered cell number>",
+                "to": whatsapp_cell_to,
                 "content": "<Test Message>"
             },
             {
                 "channel": "sms",
-                "to": "<Clickatell registered cell number>",
+                "to": sms_cell_to,
                 "content": "<Test Message>"
             }
         ]
